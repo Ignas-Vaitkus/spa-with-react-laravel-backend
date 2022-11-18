@@ -29,7 +29,7 @@ Route::get(
             JSON_UNESCAPED_UNICODE
         );
     }
-);
+)->where('id', '[0-9]+');
 
 Route::get(
     '/employees',

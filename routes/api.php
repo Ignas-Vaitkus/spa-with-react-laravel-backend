@@ -2,7 +2,6 @@
 
 use App\Models\Employee;
 use App\Models\Project;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

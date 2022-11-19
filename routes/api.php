@@ -81,3 +81,56 @@ Route::get(
         );
     }
 );
+
+Route::post('/projects', function (Request $request) {
+    $project = new Project;
+    $project->name = $request->input('name');
+    $project->save();
+
+    return response('', 201);
+});
+
+Route::post('/employees', function (Request $request) {
+    $employee = new Employee;
+    $employee->first_name = $request->input('first_name');
+    $employee->last_name = $request->input('last_name');
+    $employee->save();
+
+    return response('', 201);
+});
+
+Route::put('/projects/{id}', function (Request $request, $id) {
+    $project = Project::findOrFail($id);
+    $project->name = $request->input('name');
+    $project->save();
+})->where('id', '[0-9]+');
+
+Route::put('/employees/{id}', function (Request $request, $id) {
+    $employee = Employee::findOrFail($id);
+    $employee->first_name = $request->input('first_name');
+    $employee->last_name = $request->input('last_name');
+    $employee->save();
+})->where('id', '[0-9]+');
+
+Route::delete('/projects/{id}', function (Request $request, $id) {
+    $project = Project::findOrFail($id);
+    $project->delete();
+})->where('id', '[0-9]+');
+
+Route::delete('/employees/{id}', function (Request $request, $id) {
+    $employee = Employee::findOrFail($id);
+    $employee->delete();
+})->where('id', '[0-9]+');
+
+Route::patch(
+    '/employee/{employee_id}/project/{project_id}',
+    function (Request $request, $employee_id, $project_id) {
+        $employee = Employee::find($employee_id);
+        $project = Project::find($project_id);
+        $employee->projects()->attach($project);
+        $employee->save();
+    }
+)->where([
+    'project_id' => '[0-9]+',
+    'employee_id' => '[0-9]+'
+]);

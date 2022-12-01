@@ -145,16 +145,3 @@ Route::delete('/employees/{id}', function (Request $request, $id) {
     $employee = Employee::findOrFail($id);
     $employee->delete();
 })->where('id', '[0-9]+');
-
-Route::patch(
-    '/employee/{employee_id}/project/{project_id}',
-    function (Request $request, $employee_id, $project_id) {
-        $employee = Employee::find($employee_id);
-        $project = Project::find($project_id);
-        $employee->projects()->attach($project);
-        $employee->save();
-    }
-)->where([
-    'project_id' => '[0-9]+',
-    'employee_id' => '[0-9]+'
-]);

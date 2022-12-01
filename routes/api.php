@@ -56,6 +56,18 @@ Route::get(
 );
 
 Route::get(
+    '/employees/{id}',
+    function (Request $request, $id) {
+        return response()->json(
+            Employee::find($id),
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+    }
+);
+
+Route::get(
     '/employee-projects/{id}',
     function (Request $request, $id) {
         $employee = Employee::find($id);

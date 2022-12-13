@@ -2,6 +2,7 @@
 
 use App\Models\Employee;
 use App\Models\Project;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -67,6 +68,7 @@ Route::get(
     }
 );
 
+
 Route::get(
     '/employee-projects/{id}',
     function (Request $request, $id) {
@@ -105,6 +107,20 @@ Route::get(
         );
     }
 );
+
+Route::get('/available/projects/{id}', function (Request $request, $id) {
+
+    $projects = Project::whereDoesntHave('employees', function (Builder $query) {
+        $query->where('id', '=', $id);
+    })->get();
+
+    return response()->json(
+        $projects,
+        200,
+        ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+        JSON_UNESCAPED_UNICODE
+    );
+})->where('id', '[0-9]+');
 
 Route::post('/projects', function (Request $request) {
     $project = new Project;

@@ -41,3 +41,7 @@ The API server must run on port 8000 for the api to work.
 ```
 npm start
 ```
+
+## Study notes
+
+-   The routes of the api could have been set with the resource method.

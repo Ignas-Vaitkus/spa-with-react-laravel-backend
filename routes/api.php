@@ -110,7 +110,7 @@ Route::get(
 
 Route::get('/available/projects/{id}', function (Request $request, $id) {
 
-    $projects = Project::whereDoesntHave('employees', function (Builder $query) {
+    $projects = Project::whereDoesntHave('employees', function (Builder $query) use ($id) {
         $query->where('id', '=', $id);
     })->get();
 

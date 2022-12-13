@@ -122,6 +122,11 @@ Route::get('/available/projects/{id}', function (Request $request, $id) {
     );
 })->where('id', '[0-9]+');
 
+Route::post('/employee/{employee_id}/project/{project_id}', function (Request $request, $employee_id, $project_id) {
+    $project = Project::findOrFail($project_id);
+    $project->employees()->attach($employee_id);
+})->where(['employee_id' => '[0-9]+', 'project_id' => '[0-9]+']);;
+
 Route::post('/projects', function (Request $request) {
     $project = new Project;
     $project->name = $request->input('name');
